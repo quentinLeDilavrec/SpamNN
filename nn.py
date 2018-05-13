@@ -66,4 +66,7 @@ class NN:
             self.B[i] -= d * eta
 
     def error(self, X, Y):
-        return np.max([(Y[i] - self.evaluate(X[i])) ** 2 for i in range(len(X))])
+        return np.mean([(Y[i] - self.evaluate(X[i])) ** 2 for i in range(len(X))])
+
+    def result_error(self, X, Y):
+        return np.mean([(Y[i] - np.round(self.evaluate(X[i]))) ** 2 for i in range(len(X))])
