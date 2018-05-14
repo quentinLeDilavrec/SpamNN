@@ -23,25 +23,26 @@ X = np.array([[0, 0, 1],
 
 Y = np.array([0, 0, 1, 1])
 
-nn = NN(3, [df_train.shape[1], 50, 1], 3 * [sigma], 3 * [dsigma])
+with open('nn.pkl', 'rb') as f:
+    nn = dill.load(f)
 
 X = df_train
 Y = df["spam_or_not"]
 
-errors = []
-result_errors = []
-for i in range(1000, 50000):
+errors = [nn.error(X[:1000], Y[:1000])]
+result_errors = [nn.result_error(X[:1000], Y[:1000])]
+for i in range(1000, 100000):
     k = np.random.randint(0, 4600)
-    nn.train(X[k], Y[k], 1000. / i)
+    nn.train(X[k], Y[k], errors[-1]/50)
     if i % 10000 == 0:
         error = nn.error(X[:1000], Y[:1000])
         errors.append(error)
         print("Epoch: {}; Error: {}".format(i, error))
         result_errors.append(nn.result_error(X[:1000], Y[:1000]))
 
+
 with open('nn.pkl', 'wb') as f:
     dill.dump(nn,f)
-
 print(nn.error(X, Y))
 
 plt.plot(errors)

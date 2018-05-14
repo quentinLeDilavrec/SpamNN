@@ -1,6 +1,5 @@
 import numpy as np
 
-
 class NN:
     n = 0
     weights = [np.array([])]
