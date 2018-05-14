@@ -33,7 +33,7 @@ errors = [nn.error(X[:1000], Y[:1000])]
 result_errors = [nn.result_error(X[:1000], Y[:1000])]
 for i in range(1000, 100000):
     k = np.random.randint(0, 4600)
-    nn.train(X[k], Y[k], errors[-1]/50)
+    nn.train(X[k], Y[k], 1000./(1000+nn.get_training_count()))
     if i % 10000 == 0:
         error = nn.error(X[:1000], Y[:1000])
         errors.append(error)

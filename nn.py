@@ -18,6 +18,8 @@ class NN:
         self.dsigmas = dsigmas
         self.A = [np.zeros(i) for i in sizes]
         self.Z = [np.zeros(i) for i in sizes]
+        
+        self.count=0
 
         for i in range(n - 1):
             self.weights.append(2 * np.random.random((sizes[i], sizes[i + 1])) - 1)
@@ -63,9 +65,14 @@ class NN:
             if i > 0:
                 self.weights[i - 1] -= np.outer(self.A[i - 1], d) * eta
             self.B[i] -= d * eta
+        
+        self.count+=1
 
     def error(self, X, Y):
         return np.mean([(Y[i] - self.evaluate(X[i])) ** 2 for i in range(len(X))])
 
     def result_error(self, X, Y):
         return np.mean([(Y[i] - np.round(self.evaluate(X[i]))) ** 2 for i in range(len(X))])
+
+    def get_training_count(self):
+        return self.count
