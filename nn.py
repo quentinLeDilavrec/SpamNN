@@ -10,6 +10,14 @@ class NN:
     Z = [np.array([])]
 
     def __init__(self, n, sizes, sigmas, dsigmas):
+        '''n is the number of layer
+        sizes is the number of nodes for each layers
+        sigmas contain the functions to apply to each layers
+        dsigmas contain the derivative functions to apply to each layers
+
+        dsigma[i] needs to be the derivate of sigma[i]
+        sizes, sigmas and dsigmas need to be of size n
+        '''
         assert n == len(sizes) == len(sigmas) == len(dsigmas)
         self.n = n
         self.weights = []
@@ -28,12 +36,15 @@ class NN:
             self.B.append(2 * np.random.random(sizes[i]) - 1)
 
     def dsigma(self, n, x):
+        '''first derivate of sigmoid'''
         return self.dsigmas[n](x)
 
     def sigma(self, n, x):
+        '''sigmoid function'''
         return self.sigmas[n](x)
 
     def evaluate(self, x: np.array):
+        '''evaluate the sample x'''
         self.Z[0] = x + self.B[0]
         self.A[0] = self.sigma(0, self.Z[0])
 
@@ -69,10 +80,12 @@ class NN:
         self.count+=1
 
     def error(self, X, Y):
+        '''error between the evaluation of X and the value Y'''
         return np.mean([(Y[i] - self.evaluate(X[i])) ** 2 for i in range(len(X))])
 
     def result_error(self, X, Y):
         return np.mean([(Y[i] - np.round(self.evaluate(X[i]))) ** 2 for i in range(len(X))])
 
     def get_training_count(self):
+        '''get the number of training made on the network'''
         return self.count
