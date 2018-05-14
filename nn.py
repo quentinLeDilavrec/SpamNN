@@ -11,11 +11,17 @@ class NN:
 
     def __init__(self, n, sizes, sigmas, dsigmas):
         '''n is the number of layer
+
         sizes is the number of nodes for each layers
+
         sigmas contain the functions to apply to each layers
+
         dsigmas contain the derivative functions to apply to each layers
 
+        additionnal requires:
+
         dsigma[i] needs to be the derivate of sigma[i]
+
         sizes, sigmas and dsigmas need to be of size n
         '''
         assert n == len(sizes) == len(sigmas) == len(dsigmas)
