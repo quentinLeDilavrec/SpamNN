@@ -51,9 +51,6 @@ def get_train_test_inds(y,train_proportion=0.7):
     return train_inds,test_inds
 
 train_inds,test_inds = get_train_test_inds(Y,train_proportion=0.8)
-print(np.count_nonzero(Y))
-print(len(Y[train_inds]))
-print(len(X[train_inds]))
 
 
 import random
