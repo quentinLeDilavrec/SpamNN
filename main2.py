@@ -28,16 +28,18 @@ with open('nn.pkl', 'rb') as f:
 
 X = df_train
 Y = df["spam_or_not"]
+spam=Y==1
+sample_spam=np.random.choice(spam,500,True)
 
-errors = [nn.error(X[:1000], Y[:1000])]
-result_errors = [nn.result_error(X[:1000], Y[:1000])]
-for i in range(1000, 100000):
+errors = []
+result_errors = []
+for i in range(1000, 1000000):
     k = np.random.randint(0, 4600)
-    nn.train(X[k], Y[k], 1000./(1000+nn.get_training_count()))
-    if i % 10000 == 0:
+    nn.train(X[k], Y[k], 2000./(1000+nn.get_training_count()))
+    if nn.get_training_count() % 10000 == 0:
         error = nn.error(X[:1000], Y[:1000])
         errors.append(error)
-        print("Epoch: {}; Error: {}".format(i, error))
+        print("Epoch: {}; Error: {}".format(nn.get_training_count(), error))
         result_errors.append(nn.result_error(X[:1000], Y[:1000]))
 
 

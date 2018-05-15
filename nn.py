@@ -87,10 +87,14 @@ class NN:
 
     def error(self, X, Y):
         '''error between the evaluation of X and the value Y'''
-        return np.mean([(Y[i] - self.evaluate(X[i])) ** 2 for i in range(len(X))])
+        # tmp =np.apply_along_axis(self.evaluate,1,X)
+        # return np.mean((Y-tmp)**2)
+        return np.mean((Y-self.evaluate(X)[0])**2)
+        # np.mean([(Y[i] - self.evaluate(X[i])) ** 2 for i in range(len(X))])
 
     def result_error(self, X, Y):
-        return np.mean([(Y[i] - np.round(self.evaluate(X[i]))) ** 2 for i in range(len(X))])
+        return np.mean((Y-np.round(self.evaluate(X)[0]))**2)
+        # np.mean([(Y[i] - np.round(self.evaluate(X[i]))) ** 2 for i in ])
 
     def get_training_count(self):
         '''get the number of training made on the network'''
